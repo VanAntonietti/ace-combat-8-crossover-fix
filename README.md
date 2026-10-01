@@ -108,6 +108,10 @@ printf '[SystemSettings]\nr.WarnOfBadDrivers=0\n' > "$CFG/Engine.ini" && chflags
 
 ## Troubleshooting
 
+- `error: shim installed but real converter missing` on a fresh CrossOver: this was a bug in
+  `build.sh` (it always believed the fix was already installed). Fixed on 2026-10-01; run
+  `git pull` and build again.
+
 - `No D3DMetal shader cache for AceCombat8.exe found`: launch the game once, quit, rebuild.
 - Still black after installing: check the log file above. No `substituted` line means the shader
   did not match; rebuild after launching the current game version once.

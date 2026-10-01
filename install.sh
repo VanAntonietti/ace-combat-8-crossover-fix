@@ -6,7 +6,8 @@ CX=${CROSSOVER:-/Applications/CrossOver.app}/Contents/SharedSupport/CrossOver
 RES=$CX/lib64/apple_gptk/external/D3DMetal.framework/Versions/A/Resources
 BK=$HERE/build/libmetalirconverter.dylib.stock
 
-is_shim() { otool -L "$RES/libmetalirconverter.dylib" 2>/dev/null | grep -q libmetalirconverter_real }
+# otool's first line is the file's own path; only the linked libraries below it matter.
+is_shim() { otool -L "$RES/libmetalirconverter.dylib" 2>/dev/null | tail -n +2 | grep -q libmetalirconverter_real }
 running() { pgrep -f 'AceCombat8.exe' >/dev/null }
 
 case "${1:-status}" in

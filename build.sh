@@ -54,12 +54,15 @@ dxc -HV 2021 -Zpr -O3 -WX -auto-binding-space 0 -Zsb -Wno-parentheses-equality -
 python3 $HERE/tools/patch_shader.py headers $B/original.dxbc $B/fixed.dxbc $B
 
 print "== 4/5 building the shim"
-cp $RES/libmetalirconverter.dylib $B/libmetalirconverter_real.dylib
-if otool -L $B/libmetalirconverter_real.dylib | grep -q libmetalirconverter_real; then
+# Is the converter inside CrossOver the stock one, or our shim from an earlier install?
+# Look only at the libraries it links (otool's first line is the file's own path).
+links_real() { otool -L "$1" 2>/dev/null | tail -n +2 | grep -q libmetalirconverter_real }
+if links_real $RES/libmetalirconverter.dylib; then
   # The shim is already installed; take the pristine converter that install.sh kept beside it.
   [[ -f $RES/libmetalirconverter_real.dylib ]] || die "shim installed but real converter missing; run ./install.sh uninstall first"
   cp $RES/libmetalirconverter_real.dylib $B/libmetalirconverter_real.dylib
 else
+  cp $RES/libmetalirconverter.dylib $B/libmetalirconverter_real.dylib
   install_name_tool -id @rpath/libmetalirconverter_real.dylib $B/libmetalirconverter_real.dylib 2>/dev/null
   codesign -f -s - $B/libmetalirconverter_real.dylib 2>/dev/null
 fi
