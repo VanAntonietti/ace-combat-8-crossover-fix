@@ -18,9 +18,11 @@ Works on the one setup it was built on. Please report results for others in the 
 | CrossOver | 26.3 (D3DMetal 3.0) |
 | Game | Steam build 25201480 |
 
-Known issue: one freeze followed by the game's "unexpected error (Error 01)" was seen, possibly
-triggered by switching to another app during a cutscene. Error 01 is also reported by Windows
-players, so it may be unrelated.
+The first campaign mission plays through, cutscenes included, with no problems.
+
+Known issue: one freeze followed by the game's "unexpected error (Error 01)" was seen once during
+testing, when focus was switched to another app in the middle of a cutscene. It has not come back
+in normal play. Error 01 is also reported by Windows players, so it may be unrelated to this fix.
 
 ## What is wrong
 
